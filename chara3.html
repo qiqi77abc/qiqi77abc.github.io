@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<style>
+    #maindiv, #subdiv{
+        text-align: center;
+        margin-top: 5em;
+    }
+</style>
+
+</head>
+
+<body>
+    <script>
+        var resjson = {"(1)클레": "832(26.03%)", "(1)클레, (2)사유": "486(15.21%)", "(1)클레, (2)치치": "396(12.39%)", "(1)클레, (2)디오나": "321(10.04%)", "(1)사유": "261(8.17%)", "(1)디오나": "157(4.91%)", "(1)사유, (2)클레": "150(4.69%)", "(1)치치": "116(3.63%)", "(1)치치, (2)클레": "85(2.66%)", "(1)디오나, (2)클레": "84(2.63%)", "(1)디오나, (2)사유": "82(2.57%)", "(1)사유, (2)디오나": "75(2.35%)", "(1)사유, (2)치치": "49(1.53%)", "(1)치치, (2)사유": "47(1.47%)", "(1)디오나, (2)치치": "31(0.97%)", "(1)치치, (2)디오나": "22(0.69%)", "\"페도캐": "1(0.03%)", "(최소 1명 ~ 최대 2명까지 고를 수 있으며 먼저 눌러 번호가 빠른 캐릭터일수록 높은 우선순위임.)\"": "1(0.03%)"};
+        
+        var max_size = 3138
+
+        function getresult()
+        {
+            var selections = new Array();
+
+            if(document.getElementById("first").value != "n")
+            {
+                selections[0] = "(1)" + document.getElementById("first").value;
+
+            }
+
+            if(document.getElementById("second").value != "n")
+            {
+                selections[1] = "(2)" + document.getElementById("second").value;
+
+            }
+
+            var number = "";
+            var percent = "";
+
+            var finalval = selections.join(", ");
+            console.log(finalval);
+
+            for(var k in resjson)
+            {
+                if(k == finalval)
+                {
+                    number = resjson[k].split("(")[0];
+                    percent = resjson[k].split("(")[1].replace(")", "");
+                    break;
+                }
+            }
+
+            if(number == "" && percent == "")
+            {
+                document.getElementById("resultarea").innerHTML = "해당 조건에 맞는 결과 없음.";
+
+            }
+            else
+            {
+
+                document.getElementById("resultarea").innerHTML = "해당 조건의 선택 인원은 총 " + number + "명입니다. (전체 인원 " + max_size + "명 중 " + percent + ")";
+            
+            }
+
+        }
+    </script>
+<div id="maindiv">
+    1순위:
+    <select name="first" id="first">
+        <option value="클레">클레</option>
+        <option value="치치">치치</option>
+        <option value="디오나">디오나</option>
+        <option value="사유">사유</option>
+      </select><br><br>
+
+      2순위:
+      <select name="second" id="second">
+        <option value="n">미투표</option>
+        <option value="클레">클레</option>
+        <option value="치치">치치</option>
+        <option value="디오나">디오나</option>
+        <option value="사유">사유</option>
+      </select><br><br>
+      <input type="button" value="조회" onclick="getresult()">
+</div>
+
+<div id="subdiv">
+    <p id="resultarea">결과</p>
+</div>
+</body>
+</html>
